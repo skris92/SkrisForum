@@ -1,4 +1,4 @@
-﻿using SkrisForum.Data.Entity;
+﻿using SkrisForum.Data.Entities;
 
 namespace SkrisForum.Data
 {

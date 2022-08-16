@@ -1,4 +1,4 @@
-﻿namespace SkrisForum.Data.Entity
+﻿namespace SkrisForum.Data.Entities
 {
     public enum UserRole
     {

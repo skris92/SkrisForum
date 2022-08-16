@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SkrisForum.Data.Entity
+namespace SkrisForum.Data.Entities
 {
     public class User
     {
