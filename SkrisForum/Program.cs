@@ -16,7 +16,16 @@ builder.Services.AddDbContext<SkrisForumDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Add dataseeder service
+builder.Services.AddTransient<DataSeeder>();
+
 var app = builder.Build();
+
+// Seed initial data
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var initialiser = services.GetRequiredService<DataSeeder>();
+initialiser.Seed();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
