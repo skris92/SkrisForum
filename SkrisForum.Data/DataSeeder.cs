@@ -1,9 +1,4 @@
 ﻿using SkrisForum.Data.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkrisForum.Data
 {
@@ -30,7 +25,7 @@ namespace SkrisForum.Data
                         Username = "admin",
                         HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                         Role = UserRole.ADMIN
-            },
+                    },
                     new User()
                     {
                         Email = "user@user.com",
