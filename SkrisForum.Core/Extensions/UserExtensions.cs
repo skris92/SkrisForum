@@ -10,7 +10,7 @@ namespace SkrisForum.Core.Extensions
             return new UserViewDTO
             {
                 Id = user.Id,
-                Email = user.EmailAddress,
+                EmailAddress = user.EmailAddress,
                 Username = user.Username,
                 Role = user.Role.ToString()
             };
