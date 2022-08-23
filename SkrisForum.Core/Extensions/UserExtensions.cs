@@ -10,7 +10,7 @@ namespace SkrisForum.Core.Extensions
             return new UserViewDTO
             {
                 Id = user.Id,
-                Email = user.Email,
+                Email = user.EmailAddress,
                 Username = user.Username,
                 Role = user.Role.ToString()
             };
@@ -24,6 +24,17 @@ namespace SkrisForum.Core.Extensions
                 Username = user.Username,
                 HashedPassword = user.HashedPassword,
                 Role = user.Role
+            };
+        }
+
+        public static User ToUserEntity(this UserCreateDTO user)
+        {
+            return new User
+            {
+                EmailAddress = user.EmailAddress,
+                Username = user.Username,
+                HashedPassword = user.Password,
+                Role = (UserRole)Enum.Parse(typeof(UserRole), user.Role)
             };
         }
     }
