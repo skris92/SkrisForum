@@ -3,7 +3,7 @@ using SkrisForum.Data.Entities;
 
 namespace SkrisForum.Data.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository<User>
     {
         private readonly SkrisForumDBContext _dbContext;
 
@@ -20,7 +20,8 @@ namespace SkrisForum.Data.Repositories
 
         public async Task Delete(Guid id)
         {
-            _dbContext.Users.Remove(await GetById(id));
+            var userToDelete = await GetById(id);
+            _dbContext.Users.Remove(userToDelete);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -29,9 +30,14 @@ namespace SkrisForum.Data.Repositories
             return await _dbContext.Users.ToListAsync();
         }
 
-        public async Task<User?> GetById(Guid id)
+        public async Task<User> GetById(Guid id)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == id);
+            return await _dbContext.Users.FirstAsync(user => user.Id == id);
+        }
+
+        public async Task<User> GetByUsername(string username)
+        {
+            return await _dbContext.Users.FirstAsync(user => user.Username == username);
         }
 
         public async Task<User> Update(User entity)
