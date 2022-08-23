@@ -32,17 +32,17 @@ namespace SkrisForum.Data.Repositories
 
         public async Task<User> GetById(Guid id)
         {
-            return await _dbContext.Users.FirstAsync(user => user.Id == id);
+            return await _dbContext.Users.SingleAsync(user => user.Id == id);
         }
 
         public async Task<User> GetByUsername(string username)
         {
-            return await _dbContext.Users.FirstAsync(user => user.Username == username);
+            return await _dbContext.Users.SingleAsync(user => user.Username == username);
         }
 
         public async Task<User> Update(User entity)
         {
-            var userToUpdate = await _dbContext.Users.SingleAsync(user => user.Id == entity.Id);
+            var userToUpdate = await GetById(entity.Id);
             userToUpdate = entity;
             await _dbContext.SaveChangesAsync();
             return userToUpdate;
