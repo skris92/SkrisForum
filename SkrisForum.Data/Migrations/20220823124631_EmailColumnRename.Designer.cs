@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkrisForum.Data;
 
@@ -11,9 +12,10 @@ using SkrisForum.Data;
 namespace SkrisForum.Data.Migrations
 {
     [DbContext(typeof(SkrisForumDBContext))]
-    partial class SkrisForumDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220823124631_EmailColumnRename")]
+    partial class EmailColumnRename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
