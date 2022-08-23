@@ -11,7 +11,19 @@ namespace SkrisForum.Core.Extensions
             {
                 Id = user.Id,
                 Email = user.Email,
-                Username = user.Username
+                Username = user.Username,
+                Role = user.Role.ToString()
+            };
+        }
+
+        public static UserLoginDTO ToUserLoginDTO(this User user)
+        {
+            return new UserLoginDTO
+            {
+                Id = user.Id,
+                Username = user.Username,
+                HashedPassword = user.HashedPassword,
+                Role = user.Role
             };
         }
     }
