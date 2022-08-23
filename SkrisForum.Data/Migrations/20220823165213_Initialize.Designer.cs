@@ -12,8 +12,8 @@ using SkrisForum.Data;
 namespace SkrisForum.Data.Migrations
 {
     [DbContext(typeof(SkrisForumDBContext))]
-    [Migration("20220823124631_EmailColumnRename")]
-    partial class EmailColumnRename
+    [Migration("20220823165213_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
