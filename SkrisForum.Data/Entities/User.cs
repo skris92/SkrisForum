@@ -8,7 +8,7 @@ namespace SkrisForum.Data.Entities
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
 
         [Required]
         [MaxLength(20)]
