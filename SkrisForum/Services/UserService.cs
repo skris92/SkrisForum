@@ -7,9 +7,9 @@ namespace SkrisForum.Services
 {
     public class UserService
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository<User> _userRepository;
 
-        public UserService(IRepository<User> userRepository)
+        public UserService(IUserRepository<User> userRepository)
         {
             _userRepository = userRepository;
         }
@@ -17,6 +17,13 @@ namespace SkrisForum.Services
         public async Task<List<UserViewDTO>> GetAllUsers()
         {
             return (await _userRepository.GetAll()).Select(user => user.ToUserViewDTO()).ToList();
+        }
+
+        public async Task<UserLoginDTO> GetLoginDTOByUsername(string username)
+        {
+            var user = await _userRepository.GetByUsername(username);
+
+            return user.ToUserLoginDTO();
         }
     }
 }
