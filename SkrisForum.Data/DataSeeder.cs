@@ -21,14 +21,14 @@ namespace SkrisForum.Data
                 {
                     new User()
                     {
-                        Email = "admin@admin.com",
+                        EmailAddress = "admin@admin.com",
                         Username = "admin",
                         HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                         Role = UserRole.ADMIN
                     },
                     new User()
                     {
-                        Email = "user@user.com",
+                        EmailAddress = "user@user.com",
                         Username = "user",
                         HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                         Role = UserRole.USER
