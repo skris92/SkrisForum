@@ -1,13 +1,20 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using SkrisForum.Core.Model.AuthenticationModels;
 using SkrisForum.Data;
 using SkrisForum.Data.Entities;
 using SkrisForum.Data.Repositories;
 using SkrisForum.Services;
+using SkrisForum.Services.Authenticators;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.Configure<AuthenticationConfiguration>(builder.Configuration.GetSection("Authentication"));
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -24,7 +31,23 @@ builder.Services.AddDbContext<SkrisForumDBContext>(options =>
 });
 
 // Add data repository services
-builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IUserRepository<User>, UserRepository>();
+
+// Add authentication services
+builder.Services.AddTransient<Authenticator>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Authentication:AccessTokenSecret"])),
+        ValidIssuer = builder.Configuration["Authentication:Audience"],
+        ValidAudience = builder.Configuration["Authentication:Issuer"],
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 // Add data logic services
 builder.Services.AddTransient<UserService>();
@@ -48,6 +71,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

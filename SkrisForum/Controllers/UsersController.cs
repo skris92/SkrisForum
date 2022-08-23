@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SkrisForum.Core.Model.UserDTOs;
 using SkrisForum.Services;
@@ -16,6 +17,7 @@ namespace SkrisForum.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "ADMIN, USER")]
         [HttpGet]
         public async Task<ActionResult<List<UserViewDTO>>> GetAllUsers()
         {
