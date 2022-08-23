@@ -26,4 +26,8 @@
     <ProjectReference Include="..\SkrisForum.Data\SkrisForum.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Client\" />
+  </ItemGroup>
+
 </Project>
