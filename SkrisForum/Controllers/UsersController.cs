@@ -64,12 +64,9 @@ namespace SkrisForum.Controllers
         {
             try
             {
-                var accessToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-                var token = (JwtSecurityToken)_jwtHandler.ReadToken(accessToken);
-                var requesterId = token.Claims.Single(claim => claim.Type == "id").Value;
-                var requesterRole = token.Claims.Single(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+                var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-                if (requesterRole == "ADMIN" || userId.ToString() == requesterId)
+                if (CheckPermission(accessToken, userId))
                 {
                     var deletedUser = await _userService.DeleteUser(userId);
                     return Ok(deletedUser);
@@ -80,6 +77,15 @@ namespace SkrisForum.Controllers
             {
                 return BadRequest(new ErrorResponse(e.Message));
             }
+        }
+
+        private bool CheckPermission(string accessToken, Guid userId)
+        {
+            var token = (JwtSecurityToken)_jwtHandler.ReadToken(accessToken);
+            var requesterId = token.Claims.Single(claim => claim.Type == "id").Value;
+            var requesterRole = token.Claims.Single(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+
+            return requesterRole == "ADMIN" || userId.ToString() == requesterId;
         }
     }
 }
