@@ -51,5 +51,18 @@ namespace SkrisForum.Services
 
             return userToDelete.ToUserViewDTO();
         }
+
+        public async Task<UserViewDTO> UpdateUser(Guid userId, UserUpdateDTO updateDto)
+        {
+            var userToUpdate = await _userRepository.GetById(userId);
+
+            userToUpdate.EmailAddress = updateDto.EmailAddress ?? userToUpdate.EmailAddress;
+            userToUpdate.Username = updateDto.Username ?? userToUpdate.Username;
+            userToUpdate.HashedPassword = (updateDto.Password != null) ? BCrypt.Net.BCrypt.HashPassword(updateDto.Password) : userToUpdate.HashedPassword;
+            if (updateDto.Role != null) userToUpdate.Role = (UserRole)Enum.Parse(typeof(UserRole), updateDto.Role);
+
+            await _userRepository.Update(userToUpdate);
+            return userToUpdate.ToUserViewDTO();
+        }
     }
 }
