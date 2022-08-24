@@ -18,10 +18,9 @@ namespace SkrisForum.Data.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(User user)
         {
-            var userToDelete = await GetById(id);
-            _dbContext.Users.Remove(userToDelete);
+            _dbContext.Users.Remove(user);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -40,12 +39,11 @@ namespace SkrisForum.Data.Repositories
             return await _dbContext.Users.SingleAsync(user => user.Username == username);
         }
 
-        public async Task<User> Update(User entity)
+        public async Task Update(User entity)
         {
             var userToUpdate = await GetById(entity.Id);
             userToUpdate = entity;
             await _dbContext.SaveChangesAsync();
-            return userToUpdate;
         }
     }
 }

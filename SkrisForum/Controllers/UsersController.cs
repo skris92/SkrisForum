@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using SkrisForum.Core.Model.AuthenticationModels.Responses;
 using SkrisForum.Core.Model.UserDTOs;
 using SkrisForum.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace SkrisForum.Controllers
 {
@@ -13,10 +15,12 @@ namespace SkrisForum.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly JwtSecurityTokenHandler _jwtHandler;
 
         public UsersController(UserService userService)
         {
             _userService = userService;
+            _jwtHandler = new JwtSecurityTokenHandler();
         }
 
         [Authorize(Roles = "ADMIN, USER")]
@@ -34,9 +38,9 @@ namespace SkrisForum.Controllers
             {
                 return await _userService.GetUserById(userId);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest(new ErrorResponse("Non-existing user"));
+                return BadRequest(new ErrorResponse(e.Message));
             }
         }
 
@@ -52,6 +56,57 @@ namespace SkrisForum.Controllers
             {
                 return BadRequest(new ErrorResponse(e.Message));
             }
+        }
+
+        [Authorize(Roles = "ADMIN, USER")]
+        [HttpDelete("{userId}", Name = "DeleteUser")]
+        public async Task<ActionResult<UserViewDTO>> DeleteUser(Guid userId)
+        {
+            try
+            {
+                var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+                if (CheckPermission(accessToken, userId))
+                {
+                    var deletedUser = await _userService.DeleteUser(userId);
+                    return Ok(deletedUser);
+                }
+                return BadRequest(new ErrorResponse("Permission denied"));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ErrorResponse(e.Message));
+            }
+        }
+
+        [Authorize(Roles = "ADMIN, USER")]
+        [HttpPatch("{userId}", Name = "UpdateUser")]
+        public async Task<ActionResult<UserViewDTO>> UpdateUser(Guid userId, [FromBody] UserUpdateDTO updateDto)
+        {
+            try
+            {
+                var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+                if (CheckPermission(accessToken, userId))
+                {
+                    var updatedUser = await _userService.UpdateUser(userId, updateDto);
+                    return Ok(updatedUser);
+                }
+                return BadRequest(new ErrorResponse("Permission denied"));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ErrorResponse(e.Message));
+            }
+        }
+
+        private bool CheckPermission(string accessToken, Guid userId)
+        {
+            var token = (JwtSecurityToken)_jwtHandler.ReadToken(accessToken);
+            var requesterId = token.Claims.Single(claim => claim.Type == "id").Value;
+            var requesterRole = token.Claims.Single(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+
+            return requesterRole == "ADMIN" || userId.ToString() == requesterId;
         }
     }
 }
