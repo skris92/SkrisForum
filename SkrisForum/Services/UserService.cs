@@ -42,5 +42,14 @@ namespace SkrisForum.Services
 
             return userEntity.ToUserViewDTO();
         }
+
+        public async Task<UserViewDTO> DeleteUser(Guid userId)
+        {
+            var userToDelete = await _userRepository.GetById(userId);
+
+            await _userRepository.Delete(userToDelete);
+
+            return userToDelete.ToUserViewDTO();
+        }
     }
 }
