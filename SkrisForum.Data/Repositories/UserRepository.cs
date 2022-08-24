@@ -39,12 +39,11 @@ namespace SkrisForum.Data.Repositories
             return await _dbContext.Users.SingleAsync(user => user.Username == username);
         }
 
-        public async Task<User> Update(User entity)
+        public async Task Update(User entity)
         {
             var userToUpdate = await GetById(entity.Id);
             userToUpdate = entity;
             await _dbContext.SaveChangesAsync();
-            return userToUpdate;
         }
     }
 }
