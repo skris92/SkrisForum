@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net.Http.Headers;
 using SkrisForum.Core.Model.AuthenticationModels.Responses;
 using SkrisForum.Core.Model.UserDTOs;
 using SkrisForum.Services;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace SkrisForum.Controllers
 {
@@ -15,12 +12,10 @@ namespace SkrisForum.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly JwtSecurityTokenHandler _jwtHandler;
 
         public UsersController(IUserService userService)
         {
             _userService = userService;
-            _jwtHandler = new JwtSecurityTokenHandler();
         }
 
         [Authorize(Roles = "ADMIN, USER")]
@@ -64,14 +59,12 @@ namespace SkrisForum.Controllers
         {
             try
             {
-                var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
-                if (CheckPermission(accessToken, userId))
+                if (User.IsInRole("ADMIN") || CheckUserIfSameAsRequester(userId))
                 {
                     var deletedUser = await _userService.DeleteUser(userId);
                     return Ok(deletedUser);
                 }
-                return BadRequest(new ErrorResponse("Permission denied"));
+                return Unauthorized(new ErrorResponse("Permission denied"));
             }
             catch (Exception e)
             {
@@ -85,14 +78,12 @@ namespace SkrisForum.Controllers
         {
             try
             {
-                var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
-                if (CheckPermission(accessToken, userId))
+                if (User.IsInRole("ADMIN") || CheckUserIfSameAsRequester(userId))
                 {
                     var updatedUser = await _userService.UpdateUser(userId, updateDto);
                     return Ok(updatedUser);
                 }
-                return BadRequest(new ErrorResponse("Permission denied"));
+                return Unauthorized(new ErrorResponse("Permission denied"));
             }
             catch (Exception e)
             {
@@ -100,13 +91,11 @@ namespace SkrisForum.Controllers
             }
         }
 
-        private bool CheckPermission(string accessToken, Guid userId)
+        private bool CheckUserIfSameAsRequester(Guid userId)
         {
-            var token = (JwtSecurityToken)_jwtHandler.ReadToken(accessToken);
-            var requesterId = token.Claims.Single(claim => claim.Type == "id").Value;
-            var requesterRole = token.Claims.Single(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+            var requesterId = User.Claims.Single(claim => claim.Type == "id").Value;
 
-            return requesterRole == "ADMIN" || userId.ToString() == requesterId;
+            return userId.ToString() == requesterId;
         }
     }
 }
