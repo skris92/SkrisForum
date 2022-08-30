@@ -12,10 +12,10 @@ namespace SkrisForum.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         private readonly Authenticator _authenticator;
 
-        public AuthenticationController(UserService userService, Authenticator authenticator)
+        public AuthenticationController(IUserService userService, Authenticator authenticator)
         {
             _userService = userService;
             _authenticator = authenticator;
