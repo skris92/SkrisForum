@@ -63,7 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 // Add data logic services
-builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 // Add dataseeder service
 builder.Services.AddTransient<DataSeeder>();
