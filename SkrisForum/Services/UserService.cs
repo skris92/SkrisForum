@@ -5,7 +5,7 @@ using SkrisForum.Data.Repositories;
 
 namespace SkrisForum.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository<User> _userRepository;
 
