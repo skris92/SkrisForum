@@ -14,10 +14,10 @@ namespace SkrisForum.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         private readonly JwtSecurityTokenHandler _jwtHandler;
 
-        public UsersController(UserService userService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
             _jwtHandler = new JwtSecurityTokenHandler();
