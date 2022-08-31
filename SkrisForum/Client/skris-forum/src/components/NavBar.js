@@ -18,7 +18,7 @@ function NavBar() {
                 </Nav>
 
                 <Nav>
-                    <LinkContainer>
+                    <LinkContainer to="/login">
                         <Nav.Link>Login</Nav.Link>
                     </LinkContainer>
                 </Nav>
