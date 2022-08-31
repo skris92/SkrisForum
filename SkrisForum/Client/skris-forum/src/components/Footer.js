@@ -8,7 +8,7 @@ export default Footer;
 
 function Footer() {
     return (
-        <div className='text-center text-white p-3' style={{ backgroundColor: '#212429' }}>
+        <div className='text-center text-white p-2' style={{ backgroundColor: '#212429' }}>
             © 2022 Skris92 Development
             <FontAwesomeIcon className="fa-icon" icon={faLinkedin} />
             <FontAwesomeIcon className="fa-icon" icon={faGithub} />
