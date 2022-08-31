@@ -50,8 +50,22 @@
 }
 
 .login-register-container {
+  margin-top: 3rem;
+}
+
+.footer-container {
+  position: fixed; 
+  left: 0 ; right: 0; bottom: 0; 
+}
+
+.page-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5rem;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}
+
+.fa-icon {
+  padding-left: 1rem;
 }
