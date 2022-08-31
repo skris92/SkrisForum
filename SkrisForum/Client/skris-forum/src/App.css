@@ -49,7 +49,7 @@
   cursor: pointer;
 }
 
-.login-container {
+.login-register-container {
   display: flex;
   flex-direction: column;
   align-items: center;

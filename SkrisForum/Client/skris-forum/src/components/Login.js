@@ -7,21 +7,21 @@ export default Login;
 
 function Login() {
     return (
-        <div className="login-container">
+        <div className="login-register-container">
             <Card className="card-login" bg="light">
                 <Card.Header><h2>Sign In</h2></Card.Header>
                 <Card.Body>
                     <Card.Text>
                         <Form>
                             <Form.Group>
-                                <Form.Control type="text" placeholder="Username" />
+                                <Form.Control id="username" required type="text" placeholder="Username" />
                             </Form.Group>
                             <br />
                             <Form.Group>
-                                <Form.Control type="text" placeholder="Password" />
+                                <Form.Control id="password" required type="password" placeholder="Password" />
                             </Form.Group>
                             <br />
-                            <Button variant="dark">Login</Button>
+                            <Button variant="dark" type="submit">Login</Button>
                         </Form>
                     </Card.Text>
                 </Card.Body>
