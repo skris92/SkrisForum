@@ -69,3 +69,8 @@
 .fa-icon {
   padding-left: 1rem;
 }
+
+.fa-icon:hover {
+  cursor: pointer;
+  color: orange;
+}
