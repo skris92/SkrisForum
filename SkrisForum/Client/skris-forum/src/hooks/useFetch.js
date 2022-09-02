@@ -9,17 +9,23 @@ function useFetch(url) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setLoading(true);
-        axios.get(url)
-        .then(response => {
-            setData(response.data);
-        })
-        .catch(err => {
-            setError(err);
-        })
-        .finally(() => {
-            setLoading(false);
-        });
+        setData(null);
+        setError(null);
+
+        const fetchData = async (url) => {
+            setLoading(true);
+            await axios.get(url)
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(err => {
+                setError(err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        }
+        fetchData(url);
     }, [url]);
 
     return {data, loading, error};
