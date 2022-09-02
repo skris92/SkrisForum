@@ -86,61 +86,59 @@ function Register() {
             <Card className="card-login" bg="light">
                 <Card.Header><h2>Registration</h2></Card.Header>
                 <Card.Body>
-                    <Card.Text>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group>
-                                <Form.Control
-                                    id="email"
-                                    type="email"
-                                    maxLength="50"
-                                    placeholder="Email Address"
-                                    required
-                                    ref={email}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Form.Group>
-                                <Form.Control
-                                    id="username"
-                                    type="text"
-                                    minLength="2"
-                                    maxLength="20"
-                                    placeholder="Username"
-                                    required
-                                    ref={username}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Form.Group>
-                                <Form.Control
-                                    className={passwordClass}
-                                    id="password"
-                                    type="password"
-                                    minLength="4"
-                                    maxLength="20"
-                                    placeholder="Password"
-                                    required
-                                    ref={password}
-                                    onChange={checkPassword}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Form.Group>
-                                <Form.Control
-                                    className={cPasswordClass}
-                                    id="confirmPassword"
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    required
-                                    ref={cPassword}
-                                    onChange={checkPasswords}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Button disabled={!isPasswordValid || (isPasswordValid && !isCPasswordValid)} variant="dark" type="submit">Register</Button>
-                            {showErrorMessage && <span style={{float: "right", color: "red"}}>{errorMessage}</span>}
-                        </Form>
-                    </Card.Text>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <Form.Control
+                                id="email"
+                                type="email"
+                                maxLength="50"
+                                placeholder="Email Address"
+                                required
+                                ref={email}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Form.Group>
+                            <Form.Control
+                                id="username"
+                                type="text"
+                                minLength="2"
+                                maxLength="20"
+                                placeholder="Username"
+                                required
+                                ref={username}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Form.Group>
+                            <Form.Control
+                                className={passwordClass}
+                                id="password"
+                                type="password"
+                                minLength="4"
+                                maxLength="20"
+                                placeholder="Password"
+                                required
+                                ref={password}
+                                onChange={checkPassword}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Form.Group>
+                            <Form.Control
+                                className={cPasswordClass}
+                                id="confirmPassword"
+                                type="password"
+                                placeholder="Confirm Password"
+                                required
+                                ref={cPassword}
+                                onChange={checkPasswords}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Button disabled={!isPasswordValid || (isPasswordValid && !isCPasswordValid)} variant="dark" type="submit">Register</Button>
+                        {showErrorMessage && <span style={{ float: "right", color: "red" }}>{errorMessage}</span>}
+                    </Form>
                 </Card.Body>
             </Card>
             <br />
