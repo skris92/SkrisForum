@@ -93,6 +93,7 @@ function Register() {
                                 type="email"
                                 maxLength="50"
                                 placeholder="Email Address"
+                                autoComplete="off"
                                 required
                                 ref={email}
                             />
@@ -105,6 +106,7 @@ function Register() {
                                 minLength="2"
                                 maxLength="20"
                                 placeholder="Username"
+                                autoComplete="off"
                                 required
                                 ref={username}
                             />
