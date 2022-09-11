@@ -3,14 +3,15 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useRef } from 'react';
-import axios from 'axios';
+import useAxios from '../hooks/useAxios';
 import { useNavigate } from 'react-router-dom';
 
 export default Register;
 
-const REGISTER_API_URL = "https://localhost:7171/api/users";
+const REGISTER_API_PATH = "/api/users";
 
 function Register() {
+    const axios = useAxios();
     const navigate = useNavigate();
 
     const email = useRef();
@@ -69,7 +70,7 @@ function Register() {
         e.preventDefault();
 
         try {
-            await axios.post(REGISTER_API_URL, {
+            await axios.post(REGISTER_API_PATH, {
                 "emailAddress": email.current.value,
                 "username": username.current.value,
                 "password": password.current.value
