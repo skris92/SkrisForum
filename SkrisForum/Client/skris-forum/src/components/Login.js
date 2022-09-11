@@ -2,52 +2,37 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-
-export default Login;
+import { useState, useRef, useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 
 function Login() {
-    const LOGIN_API_URL = "https://localhost:7171/api/auth/login";
-    const navigate = useNavigate();
+    const usernameRef = useRef();
+    const passwordRef = useRef();
+    const { login } = useAuth();
 
-    const username = useRef();
-    const password = useRef();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errMsg, setErrMsg] = useState("");
 
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+    useEffect(() => {
+        setErrMsg("");
+    }, [username, password]);
 
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         try {
-            const response = await axios.post(LOGIN_API_URL,
-                {
-                    username: username.current.value,
-                    password: password.current.value
-                });
-            if (response.data && response.status === 200) {
-                const decodedToken = jwtDecode(response.data.accessToken);
-                const authData = {
-                    id: decodedToken["id"],
-                    name: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
-                    role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
-                    exp: decodedToken["exp"],
-                    accessToken: response.data.accessToken
-                };
-                localStorage.setItem("auth", JSON.stringify(authData));
-                console.log(JSON.parse(localStorage.getItem("auth")));
-                navigate("/home");
-            }
+            await login(username, password);
         } catch (error) {
-            setErrorMessage(error.message);
-            setShowErrorMessage(true);
-        } finally {
-            username.current.value = "";
-            password.current.value = "";
+            if (error.response.status === 401) {
+                setErrMsg(error.response.data.errorMessages + "!");
+            } else {
+                setErrMsg(error.message + "!");
+            }
         }
+
+        usernameRef.current.value = "";
+        passwordRef.current.value = "";
     }
 
     return (
@@ -61,8 +46,10 @@ function Login() {
                                 id="username"
                                 type="text"
                                 placeholder="Username"
+                                autoComplete="off"
+                                ref={usernameRef}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
-                                ref={username}
                             />
                         </Form.Group>
                         <br />
@@ -71,13 +58,14 @@ function Login() {
                                 id="password"
                                 type="password"
                                 placeholder="Password"
+                                ref={passwordRef}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
-                                ref={password}
                             />
                         </Form.Group>
                         <br />
                         <Button variant="dark" type="submit">Login</Button>
-                        {showErrorMessage && <span style={{ float: "right", color: "red" }}>{errorMessage}</span>}
+                        {errMsg && <span style={{ float: "right", color: "red" }}>{errMsg}</span>}
                     </Form>
                 </Card.Body>
             </Card>
@@ -88,3 +76,5 @@ function Login() {
         </div>
     )
 }
+
+export default Login;
