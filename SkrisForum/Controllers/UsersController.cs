@@ -35,7 +35,7 @@ namespace SkrisForum.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new ErrorResponse(e.Message));
+                return NotFound(new ErrorResponse(e.Message));
             }
         }
 
