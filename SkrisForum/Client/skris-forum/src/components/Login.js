@@ -71,7 +71,7 @@ function Login() {
                             />
                         </Form.Group>
                         <br />
-                        <Button variant="dark" type="submit">Login</Button>
+                        <Button variant="dark" type="submit" disabled={!username || !password}>Login</Button>
                         {errMsg && <span style={{ float: "right", color: "red" }}>{errMsg}</span>}
                     </Form>
                 </Card.Body>
