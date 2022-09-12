@@ -2,15 +2,17 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import useAxios from '../hooks/useAxios';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 export default Register;
 
 const REGISTER_API_PATH = "/api/users";
 
 function Register() {
+    const { auth } = useAuth();
     const axios = useAxios();
     const navigate = useNavigate();
 
@@ -26,6 +28,10 @@ function Register() {
     const [cPasswordClass, setCPasswordClass] = useState('form-control');
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [isCPasswordValid, setIsCPasswordValid] = useState(false);
+
+    useEffect(() => {
+        if (auth) navigate("/home");
+    });
 
     const checkPassword = (e) => {
         if (password.current.value.length >= 4 && password.current.value.length <= 20) {
