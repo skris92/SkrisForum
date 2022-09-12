@@ -42,17 +42,17 @@ function AuthProvider({ children }) {
         navigate("/login");
     }
 
-    const isTokenExpired = () => {
+    const checkExpired = () => {
         if (!auth) {
             return true
         }
         const { exp } = jwtDecode(auth?.accessToken)
 
-        return (Date.now() < exp * 1000)
+        return (Date.now() > exp * 1000)
     }
 
     return (
-        <AuthContext.Provider value={{ auth, login, logout, checkExpired: isTokenExpired }}>
+        <AuthContext.Provider value={{ auth, login, logout, checkExpired }}>
             {children}
         </AuthContext.Provider>
     )
