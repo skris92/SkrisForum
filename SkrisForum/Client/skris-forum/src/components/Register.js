@@ -18,6 +18,8 @@ function Register() {
     const username = useRef();
     const password = useRef();
     const cPassword = useRef();
+    const [emailState, setEmailState] = useState();
+    const [usernameState, setUsernameState] = useState();
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [passwordClass, setPasswordClass] = useState('form-control');
@@ -97,6 +99,7 @@ function Register() {
                                 autoComplete="off"
                                 required
                                 ref={email}
+                                onChange={(e) => setEmailState(e.target.value)}
                             />
                         </Form.Group>
                         <br />
@@ -110,6 +113,7 @@ function Register() {
                                 autoComplete="off"
                                 required
                                 ref={username}
+                                onChange={(e) => setUsernameState(e.target.value)}
                             />
                         </Form.Group>
                         <br />
@@ -139,7 +143,7 @@ function Register() {
                             />
                         </Form.Group>
                         <br />
-                        <Button disabled={!isPasswordValid || (isPasswordValid && !isCPasswordValid)} variant="dark" type="submit">Register</Button>
+                        <Button disabled={!emailState || !usernameState || !isPasswordValid || (isPasswordValid && !isCPasswordValid)} variant="dark" type="submit">Register</Button>
                         {showErrorMessage && <span style={{ float: "right", color: "red" }}>{errorMessage}</span>}
                     </Form>
                 </Card.Body>
