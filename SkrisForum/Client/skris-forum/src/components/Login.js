@@ -4,15 +4,22 @@ import Card from 'react-bootstrap/Card';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useRef, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const usernameRef = useRef();
     const passwordRef = useRef();
-    const { login } = useAuth();
+    const { auth, login } = useAuth();
+
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("");
+
+    useEffect(() => {
+        if (auth) navigate("/home");
+    });
 
     useEffect(() => {
         setErrMsg("");
