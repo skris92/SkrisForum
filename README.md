@@ -37,7 +37,8 @@ Starting the backend:
 
 
 Starting frontend:
-Go back to the root directory of the repository and navigate to:
+
+- Go back to the root directory of the repository and navigate to:
 
 ```bash
   cd .\SkrisForum\Client\skris-forum\
