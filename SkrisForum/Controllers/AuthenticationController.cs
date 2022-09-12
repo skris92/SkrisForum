@@ -40,14 +40,14 @@ namespace SkrisForum.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(new ErrorResponse("Invalid credentials"));
+                return Unauthorized(new ErrorResponse("Invalid credentials"));
             }
 
             bool isCorrectPassword = BCrypt.Net.BCrypt.Verify(loginRequest.Password, user.HashedPassword);
 
             if (!isCorrectPassword)
             {
-                return BadRequest(new ErrorResponse("Invalid credentials"));
+                return Unauthorized(new ErrorResponse("Invalid credentials"));
             }
 
             AuthenticatedUserResponse response = _authenticator.Authenticate(user);

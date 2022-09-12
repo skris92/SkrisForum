@@ -1,28 +1,47 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-
-export default NavBar;
+import useAuth from "../hooks/useAuth";
 
 function NavBar() {
+    const { auth, logout } = useAuth();
+
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
                 <LinkContainer to="/">
                     <Navbar.Brand>SkrisForum</Navbar.Brand>
                 </LinkContainer>
 
-                <Nav className="me-auto">
-                    <LinkContainer to="/home">
-                        <Nav.Link>Home</Nav.Link>
-                    </LinkContainer>
-                </Nav>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
 
-                <Nav>
-                    <LinkContainer to="/login">
-                        <Nav.Link>Sign In</Nav.Link>
-                    </LinkContainer>
-                </Nav>
+                    <Nav className="me-auto">
+                        {auth && (auth.role === "ADMIN" || auth.role === "USER") &&
+                            <LinkContainer to="/home">
+                                <Nav.Link>Home</Nav.Link>
+                            </LinkContainer>}
+                    </Nav>
+
+
+                    <Nav>
+                        {!auth &&
+                            <LinkContainer to="/login">
+                                <Nav.Link>Sign In</Nav.Link>
+                            </LinkContainer>}
+                        {auth &&
+                            <LinkContainer to="/">
+                                <Nav.Link disabled>{auth.username}</Nav.Link>
+                            </LinkContainer>}
+                        {auth &&
+                            <LinkContainer to="/">
+                                <Nav.Link onClick={logout}>Logout</Nav.Link>
+                            </LinkContainer>}
+                    </Nav>
+                </Navbar.Collapse>
+
             </Container>
         </Navbar>
     )
 }
+
+export default NavBar;

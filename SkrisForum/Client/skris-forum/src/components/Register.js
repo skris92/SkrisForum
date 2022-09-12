@@ -2,27 +2,36 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import { useState, useRef, useEffect } from 'react';
+import useAxios from '../hooks/useAxios';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 export default Register;
 
-const REGISTER_API_URL = "https://localhost:7171/api/users";
+const REGISTER_API_PATH = "/api/users";
 
 function Register() {
+    const { auth } = useAuth();
+    const axios = useAxios();
     const navigate = useNavigate();
 
     const email = useRef();
     const username = useRef();
     const password = useRef();
     const cPassword = useRef();
+    const [emailState, setEmailState] = useState();
+    const [usernameState, setUsernameState] = useState();
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [passwordClass, setPasswordClass] = useState('form-control');
     const [cPasswordClass, setCPasswordClass] = useState('form-control');
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [isCPasswordValid, setIsCPasswordValid] = useState(false);
+
+    useEffect(() => {
+        if (auth) navigate("/home");
+    });
 
     const checkPassword = (e) => {
         if (password.current.value.length >= 4 && password.current.value.length <= 20) {
@@ -69,7 +78,7 @@ function Register() {
         e.preventDefault();
 
         try {
-            await axios.post(REGISTER_API_URL, {
+            await axios.post(REGISTER_API_PATH, {
                 "emailAddress": email.current.value,
                 "username": username.current.value,
                 "password": password.current.value
@@ -86,61 +95,63 @@ function Register() {
             <Card className="card-login" bg="light">
                 <Card.Header><h2>Registration</h2></Card.Header>
                 <Card.Body>
-                    <Card.Text>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group>
-                                <Form.Control
-                                    id="email"
-                                    type="email"
-                                    maxLength="50"
-                                    placeholder="Email Address"
-                                    required
-                                    ref={email}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Form.Group>
-                                <Form.Control
-                                    id="username"
-                                    type="text"
-                                    minLength="2"
-                                    maxLength="20"
-                                    placeholder="Username"
-                                    required
-                                    ref={username}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Form.Group>
-                                <Form.Control
-                                    className={passwordClass}
-                                    id="password"
-                                    type="password"
-                                    minLength="4"
-                                    maxLength="20"
-                                    placeholder="Password"
-                                    required
-                                    ref={password}
-                                    onChange={checkPassword}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Form.Group>
-                                <Form.Control
-                                    className={cPasswordClass}
-                                    id="confirmPassword"
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    required
-                                    ref={cPassword}
-                                    onChange={checkPasswords}
-                                />
-                            </Form.Group>
-                            <br />
-                            <Button disabled={!isPasswordValid || (isPasswordValid && !isCPasswordValid)} variant="dark" type="submit">Register</Button>
-                            {showErrorMessage && <span style={{float: "right", color: "red"}}>{errorMessage}</span>}
-                        </Form>
-                    </Card.Text>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group>
+                            <Form.Control
+                                id="email"
+                                type="email"
+                                maxLength="50"
+                                placeholder="Email Address"
+                                autoComplete="off"
+                                required
+                                ref={email}
+                                onChange={(e) => setEmailState(e.target.value)}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Form.Group>
+                            <Form.Control
+                                id="username"
+                                type="text"
+                                minLength="2"
+                                maxLength="20"
+                                placeholder="Username"
+                                autoComplete="off"
+                                required
+                                ref={username}
+                                onChange={(e) => setUsernameState(e.target.value)}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Form.Group>
+                            <Form.Control
+                                className={passwordClass}
+                                id="password"
+                                type="password"
+                                minLength="4"
+                                maxLength="20"
+                                placeholder="Password"
+                                required
+                                ref={password}
+                                onChange={checkPassword}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Form.Group>
+                            <Form.Control
+                                className={cPasswordClass}
+                                id="confirmPassword"
+                                type="password"
+                                placeholder="Confirm Password"
+                                required
+                                ref={cPassword}
+                                onChange={checkPasswords}
+                            />
+                        </Form.Group>
+                        <br />
+                        <Button disabled={!emailState || !usernameState || !isPasswordValid || (isPasswordValid && !isCPasswordValid)} variant="dark" type="submit">Register</Button>
+                        {showErrorMessage && <span style={{ float: "right", color: "red" }}>{errorMessage}</span>}
+                    </Form>
                 </Card.Body>
             </Card>
             <br />
