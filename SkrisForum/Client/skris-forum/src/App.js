@@ -7,8 +7,18 @@ import Home from './components/Home';
 import NotPage from './components/NotPage';
 import Login from './components/Login';
 import Register from './components/Register';
+import useAuth from './hooks/useAuth';
+import { useEffect } from 'react';
 
 function App() {
+  const { auth, logout, checkExpired } = useAuth();
+
+  useEffect(() => {
+      if (auth && checkExpired()) {
+          logout();
+      }
+  });
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
