@@ -36,10 +36,11 @@ function Login() {
             } else {
                 setErrMsg(error.message + "!");
             }
+        } finally {
+            usernameRef.current.value = "";
+            passwordRef.current.value = "";
         }
 
-        usernameRef.current.value = "";
-        passwordRef.current.value = "";
     }
 
     return (
