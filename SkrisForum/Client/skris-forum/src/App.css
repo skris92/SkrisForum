@@ -77,5 +77,41 @@
 
 .profile-card {
   width: 70%;
-  height: 35rem;
+}
+
+.profile-card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-height: 30rem;
+}
+
+.profile-data {
+  width: 30%;
+  margin-left: 3%;
+  margin-right: 10%;
+  margin-top: 2%;
+}
+
+.profile-description {
+  width: 70%;
+}
+
+.profile-data-field {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.profile-data-field input {
+  width: 100%;
+}
+
+.profile-data-field-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-data-field-buttons Button {
+  width: 100%;
 }
