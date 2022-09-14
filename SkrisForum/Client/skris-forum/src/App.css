@@ -74,3 +74,8 @@
   cursor: pointer;
   color: orange;
 }
+
+.profile-card {
+  width: 70%;
+  height: 35rem;
+}
