@@ -27,6 +27,7 @@ function AuthProvider({ children }) {
             const authData = {
                 ...response.data,
                 id: decodedToken["id"],
+                emailAddress: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
                 username: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
                 role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
             };
