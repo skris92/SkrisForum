@@ -22,23 +22,22 @@ function NavBar() {
                             </LinkContainer>}
                     </Nav>
 
-
                     <Nav>
                         {!auth &&
                             <LinkContainer to="/login">
                                 <Nav.Link>Sign In</Nav.Link>
                             </LinkContainer>}
                         {auth &&
-                            <LinkContainer to="/">
-                                <Nav.Link disabled>{auth.username}</Nav.Link>
+                            <LinkContainer to="/profile">
+                                <Nav.Link>Profile</Nav.Link>
                             </LinkContainer>}
                         {auth &&
                             <LinkContainer to="/">
                                 <Nav.Link onClick={logout}>Logout</Nav.Link>
                             </LinkContainer>}
                     </Nav>
-                </Navbar.Collapse>
 
+                </Navbar.Collapse>
             </Container>
         </Navbar>
     )
