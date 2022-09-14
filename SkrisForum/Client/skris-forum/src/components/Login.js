@@ -7,15 +7,16 @@ import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
+    const { auth, login } = useAuth();
+    const navigate = useNavigate();
+    
     const usernameRef = useRef();
     const passwordRef = useRef();
-    const { auth, login } = useAuth();
-
-    const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("");
+    const [isButtonDisabledByError, setIsButtonDisabledByError] = useState(false);
 
     useEffect(() => {
         if (auth) navigate("/browse");
@@ -23,6 +24,7 @@ function Login() {
 
     useEffect(() => {
         setErrMsg("");
+        setIsButtonDisabledByError(false);
     }, [username, password]);
 
     async function handleSubmit(e) {
@@ -37,6 +39,7 @@ function Login() {
                 setErrMsg(error.message + "!");
             }
         } finally {
+            setIsButtonDisabledByError(true);
             usernameRef.current.value = "";
             passwordRef.current.value = "";
         }
@@ -72,7 +75,7 @@ function Login() {
                             />
                         </Form.Group>
                         <br />
-                        <Button variant="dark" type="submit" disabled={!username || !password}>Login</Button>
+                        <Button variant="dark" type="submit" disabled={isButtonDisabledByError || !username || !password}>Login</Button>
                         {errMsg && <span style={{ float: "right", color: "red" }}>{errMsg}</span>}
                     </Form>
                 </Card.Body>
