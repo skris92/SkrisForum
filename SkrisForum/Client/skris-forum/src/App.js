@@ -26,7 +26,7 @@ function App() {
         <Route index element={<LandingPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="browse" element={<RequireAuth allowedRoles={["ADMIN", "USER"]}><Browse /></RequireAuth>} />
+        <Route path="browse" element={<Browse />} />
         <Route path="profile" element={<RequireAuth allowedRoles={["ADMIN", "USER"]}><Profile /></RequireAuth>} />
         <Route path="*" element={<NotPage />} />
       </Route>
