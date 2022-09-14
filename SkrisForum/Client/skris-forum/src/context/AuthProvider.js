@@ -32,7 +32,7 @@ function AuthProvider({ children }) {
             };
             setAuth(authData);
             localStorage.setItem("auth", JSON.stringify(authData));
-            navigate("/home");
+            navigate("/browse");
         }
     }
 

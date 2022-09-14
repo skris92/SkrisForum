@@ -1,16 +1,9 @@
 import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
 
 function RequireAuth({ children, allowedRoles }) {
-    const { auth, logout, checkExpired } = useAuth();
-
-    useEffect(() => {
-        if (auth && checkExpired()) {
-            logout();
-        }
-    });
+    const { auth } = useAuth();
 
     if (!auth?.accessToken) {
         return (<Navigate to="/login" />)

@@ -3,18 +3,19 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useRef, useEffect } from 'react';
-import useAxios from '../hooks/useAxios';
+import axios from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-export default Register;
-
-const REGISTER_API_PATH = "/api/users";
-
 function Register() {
+    const REGISTER_API_PATH = "/api/users";
+
     const { auth } = useAuth();
-    const axios = useAxios();
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        if (auth) navigate("/browse");
+    }, [auth, navigate]);
 
     const email = useRef();
     const username = useRef();
@@ -28,10 +29,6 @@ function Register() {
     const [cPasswordClass, setCPasswordClass] = useState('form-control');
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [isCPasswordValid, setIsCPasswordValid] = useState(false);
-
-    useEffect(() => {
-        if (auth) navigate("/home");
-    });
 
     const checkPassword = (e) => {
         if (password.current.value.length >= 4 && password.current.value.length <= 20) {
@@ -85,7 +82,11 @@ function Register() {
             });
             navigate("/login");
         } catch (error) {
-            setErrorMessage(error.message + "!");
+            if (error.response.status === 409) {
+                setErrorMessage(error.response.data.errorMessages + "!")
+            } else {
+                setErrorMessage(error.message + "!");
+            }
             setShowErrorMessage(true);
         }
     }
@@ -161,3 +162,5 @@ function Register() {
         </div>
     )
 }
+
+export default Register;

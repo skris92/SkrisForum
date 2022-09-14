@@ -49,6 +49,17 @@ namespace SkrisForum.Controllers
             }
             catch (DbUpdateException e)
             {
+                if (e.InnerException != null && e.InnerException.Message.Contains('@'))
+                {
+                    return Conflict(new ErrorResponse("Email already taken"));
+                }
+                else
+                {
+                    return Conflict(new ErrorResponse("Username already taken"));
+                }
+            }
+            catch (Exception e)
+            {
                 return BadRequest(new ErrorResponse(e.Message));
             }
         }

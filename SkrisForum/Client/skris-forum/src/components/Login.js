@@ -18,7 +18,7 @@ function Login() {
     const [errMsg, setErrMsg] = useState("");
 
     useEffect(() => {
-        if (auth) navigate("/home");
+        if (auth) navigate("/browse");
     });
 
     useEffect(() => {
@@ -36,10 +36,11 @@ function Login() {
             } else {
                 setErrMsg(error.message + "!");
             }
+        } finally {
+            usernameRef.current.value = "";
+            passwordRef.current.value = "";
         }
 
-        usernameRef.current.value = "";
-        passwordRef.current.value = "";
     }
 
     return (
