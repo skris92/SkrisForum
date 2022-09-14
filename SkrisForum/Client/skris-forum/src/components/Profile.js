@@ -1,6 +1,6 @@
 import { Button, Card, Form } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function Profile() {
     const { auth } = useAuth();
@@ -15,14 +15,14 @@ function Profile() {
     const [usernameInputInactive, setUsernameInputInactive] = useState(true);
     const [emailInputInactive, setEmailInputInactive] = useState(true);
 
-    document.addEventListener("mousedown", (e) => {
-        handleClickOutside(e);
-        document.removeEventListener("mousedown");
-    });
-
-    window.addEventListener("keydown", (e) => {
-        handleHitEscape(e);
-        window.removeEventListener("keydown");
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        window.addEventListener("keydown", handleHitEscape);
+        
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("keydown", handleHitEscape);
+        }
     });
 
     function handleHitEscape(e) {
