@@ -17,8 +17,8 @@ function NavBar() {
 
                     <Nav className="me-auto">
                         {auth && (auth.role === "ADMIN" || auth.role === "USER") &&
-                            <LinkContainer to="/home">
-                                <Nav.Link>Home</Nav.Link>
+                            <LinkContainer to="/browse">
+                                <Nav.Link>Browse</Nav.Link>
                             </LinkContainer>}
                     </Nav>
 

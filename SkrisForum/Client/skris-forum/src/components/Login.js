@@ -18,7 +18,7 @@ function Login() {
     const [errMsg, setErrMsg] = useState("");
 
     useEffect(() => {
-        if (auth) navigate("/home");
+        if (auth) navigate("/browse");
     });
 
     useEffect(() => {

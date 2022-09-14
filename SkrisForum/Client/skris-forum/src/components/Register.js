@@ -14,7 +14,7 @@ function Register() {
     const navigate = useNavigate();
     
     useEffect(() => {
-        if (auth) navigate("/home");
+        if (auth) navigate("/browse");
     }, [auth, navigate]);
 
     const email = useRef();
