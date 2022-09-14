@@ -16,10 +16,9 @@ function NavBar() {
                 <Navbar.Collapse id="responsive-navbar-nav">
 
                     <Nav className="me-auto">
-                        {auth && (auth.role === "ADMIN" || auth.role === "USER") &&
-                            <LinkContainer to="/browse">
-                                <Nav.Link>Browse</Nav.Link>
-                            </LinkContainer>}
+                        <LinkContainer to="/browse">
+                            <Nav.Link>Browse</Nav.Link>
+                        </LinkContainer>
                     </Nav>
 
                     <Nav>
@@ -32,7 +31,7 @@ function NavBar() {
                                 <Nav.Link>Profile</Nav.Link>
                             </LinkContainer>}
                         {auth &&
-                            <LinkContainer to="/">
+                            <LinkContainer to="/login">
                                 <Nav.Link onClick={logout}>Logout</Nav.Link>
                             </LinkContainer>}
                     </Nav>
