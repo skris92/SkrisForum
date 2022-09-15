@@ -113,3 +113,7 @@
 .profile-data-field-buttons Button {
   width: 100%;
 }
+
+.profile-data-field Button {
+  margin-top: 2%;
+}
