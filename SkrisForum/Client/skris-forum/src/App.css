@@ -81,6 +81,11 @@
 
 .profile-card-content {
   display: flex;
+  flex-direction: column;
+}
+
+.profile-card-upper {
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
   min-height: 30rem;
