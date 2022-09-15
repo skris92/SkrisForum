@@ -17,10 +17,8 @@ function Profile() {
 
     useEffect(() => {
         if (!usernameInputInactive) {
-            usernameRef.current.setSelectionRange(auth.username.length, auth.username.length);
             usernameRef.current.focus();
         } else if (!emailInputInactive) {
-            // emailRef.current.setSelectionRange(auth.emailAddress.length, auth.emailAddress.length);
             emailRef.current.focus();
         }
     }, [usernameInputInactive, emailInputInactive, auth]);
@@ -50,10 +48,10 @@ function Profile() {
     function handleClickOutside(e) {
         if (usernameInputInactive && emailInputInactive) {
             return;
-        } else if (!usernameInputInactive && !usernameRef.current.contains(e.target) && !usernameUpdateButtonRef.current?.contains(e.target)) {
+        } else if (!usernameInputInactive && !usernameRef.current.contains(e.target)) {
             setUsername(auth.username);
             setUsernameInputInactive(true);
-        } else if (!emailInputInactive && !emailRef.current.contains(e.target) && !emailUpdateButtonRef?.current?.contains(e.target)) {
+        } else if (!emailInputInactive && !emailRef.current.contains(e.target)) {
             setEmailAddress(auth.emailAddress);
             setEmailInputInactive(true);
         }
@@ -77,6 +75,7 @@ function Profile() {
                                     disabled={usernameInputInactive}
                                     ref={usernameRef}
                                     minLength="2"
+                                    spellCheck="false"
                                     required
                                 />
                                 {!usernameInputInactive &&
