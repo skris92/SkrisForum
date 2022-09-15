@@ -6,6 +6,7 @@ namespace SkrisForum.Services
     {
         Task<List<UserViewDTO>> GetAllUsers();
         Task<UserViewDTO> GetUserById(Guid userId);
+        Task<UserViewDTO> GetUserByUsername(string username);
         Task<UserLoginDTO> GetLoginDTOByUsername(string username);
         Task<UserViewDTO> AddUser(UserCreateDTO newUser);
         Task<UserViewDTO> DeleteUser(Guid userId);

@@ -39,6 +39,20 @@ namespace SkrisForum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN, USER")]
+        [HttpGet("byUsername/{username}", Name = "GetUserByUsername")]
+        public async Task<ActionResult<UserViewDTO>> GetUserByUsername(string username)
+        {
+            try
+            {
+                return await _userService.GetUserByUsername(username);
+            }
+            catch (Exception e)
+            {
+                return NotFound(new ErrorResponse(e.Message));
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<UserViewDTO>> AddUser(UserCreateDTO newUser)
         {

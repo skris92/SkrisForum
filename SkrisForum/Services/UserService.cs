@@ -25,6 +25,12 @@ namespace SkrisForum.Services
             return user.ToUserViewDTO();
         }
 
+        public async Task<UserViewDTO> GetUserByUsername(string username)
+        {
+            User user = await _userRepository.GetByUsername(username);
+            return user.ToUserViewDTO();
+        }
+
         public async Task<UserLoginDTO> GetLoginDTOByUsername(string username)
         {
             var user = await _userRepository.GetByUsername(username);
