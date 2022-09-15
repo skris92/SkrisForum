@@ -16,6 +16,16 @@ function Profile() {
     const [emailInputInactive, setEmailInputInactive] = useState(true);
 
     useEffect(() => {
+        if (!usernameInputInactive) {
+            usernameRef.current.setSelectionRange(auth.username.length, auth.username.length);
+            usernameRef.current.focus();
+        } else if (!emailInputInactive) {
+            // emailRef.current.setSelectionRange(auth.emailAddress.length, auth.emailAddress.length);
+            emailRef.current.focus();
+        }
+    }, [usernameInputInactive, emailInputInactive, auth]);
+
+    useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
         window.addEventListener("keydown", handleHitEscape);
         
@@ -73,11 +83,10 @@ function Profile() {
                                     <div className="profile-data-field-buttons">
                                         <Button
                                             type="submit"
-                                            style={{ "marginTop": "2%" }}
-                                            disabled={username === auth.username || username === ""}
+                                            disabled={username === auth.username || username.length < 2}
                                             ref={usernameUpdateButtonRef}
                                             onClick={() => {
-                                                username.current.focus();
+                                                
                                             }}
                                         >
                                             Update (Esc to cancel)
@@ -87,10 +96,7 @@ function Profile() {
                             {usernameInputInactive &&
                                 <Button
                                     variant="dark"
-                                    style={{ "marginTop": "2%" }}
-                                    onClick={() => {
-                                        setUsernameInputInactive(false);
-                                    }}
+                                    onClick={() => setUsernameInputInactive(false)}
                                 >
                                     Edit
                                 </Button>}
@@ -112,7 +118,6 @@ function Profile() {
                                     <div className="profile-data-field-buttons">
                                         <Button
                                             type="submit"
-                                            style={{ "marginTop": "2%" }}
                                             disabled={emailAddress === auth.emailAddress || emailAddress === ""}
                                             ref={emailUpdateButtonRef}
                                             onClick={() => {
@@ -126,10 +131,7 @@ function Profile() {
                             {emailInputInactive &&
                                 <Button
                                     variant="dark"
-                                    style={{ "marginTop": "2%" }}
-                                    onClick={() => {
-                                        setEmailInputInactive(false);
-                                    }}
+                                    onClick={() => setEmailInputInactive(false)}
                                 >
                                     Edit
                                 </Button>}
