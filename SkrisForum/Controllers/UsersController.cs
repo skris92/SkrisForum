@@ -65,11 +65,11 @@ namespace SkrisForum.Controllers
             {
                 if (e.InnerException != null && e.InnerException.Message.Contains('@'))
                 {
-                    return Conflict(new ErrorResponse("Email already taken"));
+                    return Conflict(new ErrorResponse("Email not available"));
                 }
                 else
                 {
-                    return Conflict(new ErrorResponse("Username already taken"));
+                    return Conflict(new ErrorResponse("Username not available"));
                 }
             }
             catch (Exception e)
@@ -109,6 +109,17 @@ namespace SkrisForum.Controllers
                     return Ok(updatedUser);
                 }
                 return Unauthorized(new ErrorResponse("Permission denied"));
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.InnerException != null && e.InnerException.Message.Contains('@'))
+                {
+                    return Conflict(new ErrorResponse("Email not available"));
+                }
+                else
+                {
+                    return Conflict(new ErrorResponse("Username not available"));
+                }
             }
             catch (Exception e)
             {
