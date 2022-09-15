@@ -1,9 +1,10 @@
 import { Button, Card, Form } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { useState, useRef, useEffect } from "react";
+import axios from "../api/axios";
 
 function Profile() {
-    const { auth } = useAuth();
+    const { auth, setAuth } = useAuth();
 
     const usernameRef = useRef();
     const emailRef = useRef();
@@ -60,6 +61,59 @@ function Profile() {
         }
     }
 
+    async function handleUpdate(e) {
+        e.preventDefault();
+
+        try {
+            await axios.patch(`/api/users/${auth.id}`,
+                {
+                    username: (username === auth.username) ? null : username,
+                    emailAddress: (emailAddress === auth.emailAddress) ? null : emailAddress
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${auth.accessToken}`
+                    },
+                    withCredentials: true
+                }
+            );
+            const authData = auth;
+            authData.username = username;
+            authData.emailAddress = emailAddress;
+            setAuth(authData);
+        } catch (error) {
+            if (error.response.status === 409) {
+                alert(error.response.data.errorMessages + "!");
+            } else if (error.response.status === 401) {
+                alert("Access token expired!");
+            }
+        } finally {
+            setUsername(auth.username);
+            setEmailAddress(auth.emailAddress);
+
+            setUsernameInputInactive(true);
+            setEmailInputInactive(true);
+        }
+    }
+
+    // async function handleEmailUpdate(e) {
+    //     e.preventDefault();
+
+    //     try {
+    //         await axios.patch(`/api/users/${auth.id}`,
+    //             {
+    //                 emailAddress: emailAddress
+    //             }
+    //         );
+    //         const authData = auth;
+    //         authData.emailAddress = emailAddress;
+    //         setAuth(authData);
+    //         setEmailInputInactive(true);
+    //     } catch (error) {
+    //         alert("Update failed!")
+    //     }
+    // }
+
     return (
         <Card className="profile-card">
             <Card.Header>
@@ -71,7 +125,7 @@ function Profile() {
                         <div className="profile-data">
                             <div>
                                 <div className="profile-data-field">
-                                    <Form>
+                                    <Form onSubmit={handleUpdate}>
                                         <h5>Username</h5>
                                         <Form.Control
                                             onChange={(e) => setUsername(e.target.value)}
@@ -89,9 +143,6 @@ function Profile() {
                                                     type="submit"
                                                     disabled={username === auth.username || username === ""}
                                                     ref={usernameUpdateButtonRef}
-                                                    onClick={() => {
-
-                                                    }}
                                                 >
                                                     Update (Esc to cancel)
                                                 </Button>
@@ -107,7 +158,7 @@ function Profile() {
                                     <br />
                                 </div>
                                 <div className="profile-data-field">
-                                    <Form>
+                                    <Form onSubmit={handleUpdate}>
                                         <h5>Email</h5>
                                         <Form.Control
                                             type="email"
@@ -116,6 +167,7 @@ function Profile() {
                                             placeholder={auth.emailAddress}
                                             disabled={emailInputInactive}
                                             ref={emailRef}
+                                            spellCheck="false"
                                             required
                                         />
                                         {!emailInputInactive &&
@@ -124,9 +176,6 @@ function Profile() {
                                                     type="submit"
                                                     disabled={emailAddress === auth.emailAddress || emailAddress === ""}
                                                     ref={emailUpdateButtonRef}
-                                                    onClick={() => {
-
-                                                    }}
                                                 >
                                                     Update (Esc to cancel)
                                                 </Button>
