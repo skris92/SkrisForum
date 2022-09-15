@@ -72,7 +72,7 @@
 
 .fa-icon:hover {
   cursor: pointer;
-  color: orange;
+  /* color: orange; */
 }
 
 .profile-card {
@@ -88,16 +88,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  min-height: 30rem;
+  min-height: 480px;
 }
 
 .profile-data {
-  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20%;
   margin-top: 2%;
-}
-
-.profile-description {
-  width: 70%;
 }
 
 .profile-data-field {
@@ -121,4 +120,28 @@
 
 .profile-data-field Button {
   margin-top: 2%;
+}
+
+.profile-description {
+  margin-top: 2%;
+  width: 70%;
+}
+
+.profile-description Button {
+  margin-top: 1%;
+  float: right;
+}
+
+.profile-card-lower {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.profile-delete-button-container {
+
+}
+
+.profile-delete-button {
+  width: 100%;
 }
