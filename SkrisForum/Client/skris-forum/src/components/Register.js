@@ -84,6 +84,11 @@ function Register() {
         } catch (error) {
             if (error.response.status === 409) {
                 setErrorMessage(error.response.data.errorMessages + "!")
+                if (error.response.data.errorMessages[0] === "Email already taken") {
+                    email.current.focus();
+                } else {
+                    username.current.focus();
+                }
             } else {
                 setErrorMessage(error.message + "!");
             }
