@@ -132,16 +132,6 @@
   float: right;
 }
 
-.profile-card-lower {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.profile-delete-button-container {
-
-}
-
 .profile-delete-button {
   width: 100%;
 }
