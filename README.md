@@ -6,17 +6,18 @@ This is a web application for a forum where users can create and comment on topi
 
 ## Features
 
-- Role based authentication (admin, user)
+- Role based JWT authentication (admin, user)
 - User Registration
 - Login / Logout System
-- Users list, add user, delete user, get user, update user
+- CRUD user APIs
+- Update / Delete user on Profile page
 
 ## Login info
 Use these users to test features. Features vary based on user role.
 
-- Admin user -  Username: `admin` Password: `1234`
+- Role: `admin` -  Username: `admin` Password: `1234`
 
-- User user - Username: `user` Password: `1234`
+- Role: `user` - Username: `user` Password: `1234`
 
 ## Run Locally
 ##### Prerequisites
