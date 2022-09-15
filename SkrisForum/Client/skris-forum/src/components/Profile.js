@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import axios from "../api/axios";
 
 function Profile() {
-    const { auth, setAuth } = useAuth();
+    const { auth, setAuth, logout } = useAuth();
 
     const usernameRef = useRef();
     const emailRef = useRef();
@@ -86,6 +86,7 @@ function Profile() {
                 alert(error.response.data.errorMessages + "!");
             } else if (error.response.status === 401) {
                 alert("Access token expired!");
+                logout();
             }
         } finally {
             setUsername(auth.username);
@@ -96,23 +97,21 @@ function Profile() {
         }
     }
 
-    // async function handleEmailUpdate(e) {
-    //     e.preventDefault();
-
-    //     try {
-    //         await axios.patch(`/api/users/${auth.id}`,
-    //             {
-    //                 emailAddress: emailAddress
-    //             }
-    //         );
-    //         const authData = auth;
-    //         authData.emailAddress = emailAddress;
-    //         setAuth(authData);
-    //         setEmailInputInactive(true);
-    //     } catch (error) {
-    //         alert("Update failed!")
-    //     }
-    // }
+    async function handleDelete(e) {
+        if (window.confirm("Deleting account is permanent. Are you sure?")) {
+            try {
+                await axios.delete(`/api/users/${auth.id}`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${auth.accessToken}`
+                    }
+                });
+                logout();
+            } catch (error) {
+                alert("Deleting failed!");
+            }
+        }
+    }
 
     return (
         <Card className="profile-card">
@@ -194,7 +193,15 @@ function Profile() {
                                 <p>Comments - 0</p>
                             </div>
                             <div className="profile-delete-button-container">
-                                <Button className="profile-delete-button" variant="danger">Delete Account</Button>
+                                <Button
+                                    className="profile-delete-button"
+                                    variant="danger"
+                                    onClick={() => {
+                                        handleDelete();
+                                    }}
+                                >
+                                    Delete Account
+                                </Button>
                             </div>
                         </div>
                         <div className="profile-description">
