@@ -58,6 +58,10 @@
   left: 0 ; right: 0; bottom: 0; 
 }
 
+.footer-container span {
+  margin-left: 1rem;
+}
+
 .page-content {
   display: flex;
   flex-direction: column;
@@ -67,7 +71,7 @@
 }
 
 .fa-icon {
-  padding-left: 1rem;
+  margin-left: 1rem;
 }
 
 .fa-icon:hover {
