@@ -58,6 +58,10 @@
   left: 0 ; right: 0; bottom: 0; 
 }
 
+.footer-container span {
+  margin-left: 1rem;
+}
+
 .page-content {
   display: flex;
   flex-direction: column;
@@ -67,10 +71,71 @@
 }
 
 .fa-icon {
-  padding-left: 1rem;
+  margin-left: 1rem;
 }
 
 .fa-icon:hover {
   cursor: pointer;
-  color: orange;
+  /* color: orange; */
+}
+
+.profile-card {
+  width: 70%;
+}
+
+.profile-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-card-upper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-height: 480px;
+}
+
+.profile-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20%;
+  margin-top: 2%;
+}
+
+.profile-data-field {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.profile-data-field input {
+  width: 100%;
+}
+
+.profile-data-field-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-data-field-buttons Button {
+  width: 100%;
+}
+
+.profile-data-field Button {
+  margin-top: 2%;
+}
+
+.profile-description {
+  margin-top: 2%;
+  width: 70%;
+}
+
+.profile-description Button {
+  margin-top: 1%;
+  float: right;
+}
+
+.profile-delete-button {
+  width: 100%;
 }

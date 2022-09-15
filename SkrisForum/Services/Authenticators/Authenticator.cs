@@ -41,10 +41,12 @@ namespace SkrisForum.Services.Authenticators
         public string GenerateAccessToken(UserLoginDTO user)
         {
             List<Claim> claims = new List<Claim>()
-        {
-            new Claim("id", user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Role, user.Role.ToString())        };
+            {
+                new Claim("id", user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.EmailAddress),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
+            };
 
             return GenerateToken(
                 _configuration.AccessTokenSecret,

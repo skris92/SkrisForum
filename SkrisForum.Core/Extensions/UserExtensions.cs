@@ -21,6 +21,7 @@ namespace SkrisForum.Core.Extensions
             return new UserLoginDTO
             {
                 Id = user.Id,
+                EmailAddress = user.EmailAddress,
                 Username = user.Username,
                 HashedPassword = user.HashedPassword,
                 Role = user.Role

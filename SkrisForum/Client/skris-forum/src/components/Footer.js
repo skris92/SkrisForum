@@ -10,10 +10,11 @@ function Footer() {
     return (
         <div className='text-center text-white p-2' style={{ backgroundColor: '#212429' }}>
             © 2022 Skris92 Development
-            <FontAwesomeIcon className="fa-icon" icon={faLinkedin} />
-            <FontAwesomeIcon className="fa-icon" icon={faGithub} />
+            <FontAwesomeIcon className="fa-icon" icon={faLinkedin} href="https://www.linkedin.com/in/kristof-szurcsik/"/>
+            <FontAwesomeIcon className="fa-icon" icon={faGithub} href="https://github.com/skris92" />
             <FontAwesomeIcon className="fa-icon" icon={faDiscord} />
             <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
+            <span>szurcsik92@gmail.com</span>
         </div>
     );
 }
