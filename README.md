@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a web application for a forum where users can create and comment on topics.
+Forum web application where users can create and comment on topics.
 
 ## Features
 
